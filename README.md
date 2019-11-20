@@ -16,7 +16,7 @@ Find the manifest.json file in the Packages folder of your project and edit it t
 ```js
 {
   "dependencies": {
-    "com.gameframe.poolling": "https://github.com/coryleach/UnityPooling.git#1.0.0",
+    "com.gameframe.pooling": "https://github.com/coryleach/UnityPooling.git#1.0.0",
     ...
   },
 }
