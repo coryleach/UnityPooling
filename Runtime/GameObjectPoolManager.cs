@@ -4,18 +4,18 @@ using UnityEngine;
 namespace Gameframe.Pooling
 {
   [CreateAssetMenu(menuName = "Gameframe/Pooling/PoolManager")]
-  public class PoolManager : ScriptableObject
+  public class GameObjectPoolManager : ScriptableObject
   {
-    private readonly Dictionary<PoolableGameObject, Pool> poolDictionary = new Dictionary<PoolableGameObject, Pool>();
+    private readonly Dictionary<PoolableGameObject, GameObjectPool> poolDictionary = new Dictionary<PoolableGameObject, GameObjectPool>();
 
-    public Pool GetPool(PoolableGameObject prefab)
+    public GameObjectPool GetPool(PoolableGameObject prefab)
     {
       if ( poolDictionary.TryGetValue(prefab,out var pool) )
       {
         return pool;
       }
 
-      pool = new Pool(prefab);
+      pool = new GameObjectPool(prefab);
 
       poolDictionary.Add(prefab, pool);
 

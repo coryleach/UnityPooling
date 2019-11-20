@@ -3,9 +3,9 @@ using UnityEngine;
 
 namespace Gameframe.Pooling
 {
-  public class Pool
+  public class GameObjectPool
   {
-    public Pool(PoolableGameObject prefab)
+    public GameObjectPool(PoolableGameObject prefab)
     {
       _prefab = prefab;
     }
@@ -21,10 +21,10 @@ namespace Gameframe.Pooling
     public T Spawn<T>(Transform parent = null ) where T : PoolableGameObject
     {
       Debug.Assert(_prefab is T, "pool prefab is not the correct type");
-      return Spawn(parent) as T;
+      return Get(parent) as T;
     }
 
-    public PoolableGameObject Spawn(Transform parent = null)
+    public PoolableGameObject Get(Transform parent = null)
     {
       PoolableGameObject spawnedObject = null;
 
@@ -36,7 +36,7 @@ namespace Gameframe.Pooling
       else
       {
         spawnedObject = parent != null ? Object.Instantiate(_prefab,parent) : Object.Instantiate(_prefab);
-        spawnedObject.SourcePool = this;
+        spawnedObject.SourceGameObjectPool = this;
       }
 
       //If prefab is active, then also activate the spawned game object
@@ -45,16 +45,16 @@ namespace Gameframe.Pooling
         spawnedObject.gameObject.SetActive(true);
       }
 
-      spawnedObject.OnPoolableSpawned();
+      spawnedObject.OnGetFromPool();
 
       return spawnedObject;
     }
 
-    public void Despawn(PoolableGameObject spawnedObject)
+    public void Release(PoolableGameObject spawnedObject)
     {
-      Debug.Assert(spawnedObject.SourcePool == this, "Attempting to despawn an object to a pool that is not its spawn source");
+      Debug.Assert(spawnedObject.SourceGameObjectPool == this, "Attempting to despawn an object to a pool that is not its spawn source");
 
-      spawnedObject.OnPoolableDespawn();
+      spawnedObject.OnReleaseToPool();
       spawnedObject.gameObject.SetActive(false);
       _instanceQueue.Add(spawnedObject);
     }

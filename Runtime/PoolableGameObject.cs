@@ -4,35 +4,35 @@ namespace Gameframe.Pooling
 {
   public class PoolableGameObject : MonoBehaviour
   {
-    private Pool _pool = null;
-    public Pool SourcePool
+    private GameObjectPool gameObjectPool = null;
+    public GameObjectPool SourceGameObjectPool
     {
-      get => _pool;
-      set => _pool = value;
+      get => gameObjectPool;
+      set => gameObjectPool = value;
     }
 
     public virtual void OnDestroy()
     {
       //SourcePool may be null if this is a prefab object
-      if ( SourcePool != null )
+      if ( SourceGameObjectPool != null )
       {
-        SourcePool.RemoveInstance(this);
+        SourceGameObjectPool.RemoveInstance(this);
       }
     }
 
-    public virtual void OnPoolableSpawned()
+    public virtual void OnGetFromPool()
     {
 
     }
 
-    public virtual void OnPoolableDespawn()
+    public virtual void OnReleaseToPool()
     {
 
     }
 
-    public void Despawn()
+    public void Release()
     {
-      SourcePool.Despawn(this);
+      SourceGameObjectPool.Release(this);
     }
 
   }

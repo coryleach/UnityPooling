@@ -27,7 +27,7 @@ namespace Gameframe.Pooling
     {
       if (coroutine != null)
       {
-        Despawn();
+        Release();
       }
     }
 
@@ -36,7 +36,7 @@ namespace Gameframe.Pooling
       var system = Particles;
       yield return new WaitUntil( ()=> !system.IsAlive(checkChildren) );
       coroutine = null;
-      Despawn();
+      Release();
     }
   }
 }
