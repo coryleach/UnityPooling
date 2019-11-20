@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Gameframe.Pooling
 {
-  [CreateAssetMenu(menuName = "GameJam/Pooling/PoolManager")]
+  [CreateAssetMenu(menuName = "Gameframe/Pooling/PoolManager")]
   public class PoolManager : ScriptableObject
   {
     private readonly Dictionary<PoolableGameObject, Pool> poolDictionary = new Dictionary<PoolableGameObject, Pool>();
